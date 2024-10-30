@@ -62,8 +62,7 @@ export class News extends Component {
       const response = await fetch(url, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
-          "Upgrade": "h2c", // Request HTTP/2 upgrade if required by the server
+          "Upgrade": "h2c", // Optional: Include this only if HTTP/2 is required.
         }
       });
   
