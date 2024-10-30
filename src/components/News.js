@@ -59,10 +59,16 @@ export class News extends Component {
     this.setState({ loading: true });
   
     try {
-      const response = await fetch(url);
-      const parsedData = await response.json();
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Upgrade": "h2c", // Request HTTP/2 upgrade if required by the server
+        }
+      });
   
-    
+      const parsedData = await response.json();
+      
       console.log("API Response:", parsedData);
   
       if (!parsedData.articles || !Array.isArray(parsedData.articles)) {
@@ -75,7 +81,7 @@ export class News extends Component {
         totalPages: Math.ceil(parsedData.totalResults / pageSize),
         loading: false,
       });
-      this.loadingMore = false; 
+      this.loadingMore = false;
     } catch (error) {
       console.error("Error fetching articles:", error);
       this.setState({ loading: false });
